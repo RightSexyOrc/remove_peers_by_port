@@ -5,7 +5,7 @@ import re
 import argparse
 from typing import List, Tuple
 
-INTRODUCERS = ('dns-introducer.aba.ooo', 'dns-introducer.abacoin.io')
+INTRODUCERS = ('dns-introducer.aba.ooo', 'dns-introducer.abacoin.io', 'dns-introducer.abacoin.net', 'dns-introducer.aba-project.io')
 ABA_PORT = 8644
 
 def get_peer_connections() -> List[Tuple[str, str, int]]:
@@ -40,7 +40,7 @@ def dig_new_peers (existing_connections: List[Tuple[str, str, int]]) -> List:
         # Run dig on introducers
         for introducer in INTRODUCERS:
             # Use +short to only get the IP address so we don't have to mess with the header/footer
-            result = subprocess.run(['dig', 'dns-introducer.aba.ooo', '+short'], 
+            result = subprocess.run(['dig', introducer, '+short'], 
                                     capture_output=True, text=True, check=True)
             lines = result.stdout.split('\n')
             for line in lines:
